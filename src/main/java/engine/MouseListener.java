@@ -37,6 +37,7 @@ public class MouseListener
         get().lastY = get().yPos;
         get().xPos = xpos;
         get().yPos = ypos;
+        get().isDragging = get().mouseButtonPressed[0] || get().mouseButtonPressed[1] || get().mouseButtonPressed[2];
     }
 
     public static void MouseButtonCallback(long window, int button, int action, int mods)
@@ -55,6 +56,67 @@ public class MouseListener
                 get().mouseButtonPressed[button] = false;
                 get().isDragging = false;
             }
+        }
+    }
+
+    public static void MouseScrollCallback(long window, double xOffset, double yOffset)
+    {
+        get().scrollX = xOffset;
+        get().scrollY = yOffset;
+    }
+
+    public static void EndFrame()
+    {
+        get().scrollX = 0;
+        get().scrollY = 0;
+        get().lastX = get().xPos;
+        get().lastY = get().yPos;
+    }
+
+    public static float GetX()
+    {
+        return (float)get().xPos;
+    }
+
+    public static float GetY()
+    {
+        return (float)get().yPos;
+    }
+
+    public static float GetDx()
+    {
+        return (float)(get().lastX - get().xPos);
+    }
+
+    public static float GetDy()
+    {
+        return (float)(get().lastY - get().yPos);
+    }
+
+    public static float GetScrollX()
+    {
+        return (float)get().scrollX;
+    }
+
+    public static float GetScrollY()
+    {
+        return (float)get().scrollY;
+    }
+
+    public static boolean IsDragging()
+    {
+        return get().isDragging;
+    }
+
+    public static boolean MouseButtonDown(int button)
+    {
+        if (button < get().mouseButtonPressed.length)
+        {
+            return get().mouseButtonPressed[button];
+        }
+        else
+        {
+            return false;
         }
     }
 }
